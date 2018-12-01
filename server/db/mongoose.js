@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 // get from configuration in the future
-var dbUrl = 'mongodb://localhost:27017/ToDoApp';
+var dbUrl = process.env.MONGODB_URI || 'mongodb://localhost:27017/ToDoApp';
 
 mongoose.connect(dbUrl, { useNewUrlParser: true });
 
