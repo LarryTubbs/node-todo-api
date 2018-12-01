@@ -56,23 +56,3 @@ app.listen(port, () => {
 
 module.exports = {app};
 
-// var newTodo = new Todo({
-//     text: 'Make coffee'
-// });
-
-// newTodo.save().then( (doc) => {
-//     console.log(doc);
-//     console.log('Saved to database');
-// }).catch( (e) => {
-//     console.log('unable to save Todo to db: ', e);
-// });
-
-// var newUser = new User({
-//     email: 'l_squared@hotmail.com'
-// });
-
-// newUser.save().then( (doc) => {
-//     console.log('user saved: ', JSON.stringify(doc, undefined, 2));
-// }).catch( (e) => {
-//     console.log('unable to save user: ', JSON.stringify(e, undefined, 2));
-// });
