@@ -1,21 +1,28 @@
 const expect = require('expect.js');
 const request = require('supertest');
+const {ObjectID} = require('mongodb');
 
 const {app} = require('../server');
 const {Todo} = require('../models/Todo');
 
 // create seed data
 const seedTodos = [{
+    _id: new ObjectID(),
     text: '1st test todo'
 },{
+    _id: new ObjectID(),
     text: '2nd test todo'
 },{
+    _id: new ObjectID(),
     text: '3rd test todo'
 },{
+    _id: new ObjectID(),
     text: '4th test todo'
 },{
+    _id: new ObjectID(),
     text: '5th test todo'
 },{
+    _id: new ObjectID(),
     text: '6th test todo'
 }];
 
@@ -81,6 +88,32 @@ describe('GET /todos', () => {
             .expect( (res) => {
                 expect(res.body.todos.length).to.be(6);
             })
+            .end(done);
+    });
+});
+
+describe('GET /todos/:id', () => {
+    it('should get a specific todo', (done) => {
+        request(app)
+            .get(`/todos/${seedTodos[0]._id.toHexString()}`)
+            .expect(200)
+            .expect( (res) => {
+                expect(res.body.todo.text).to.be(seedTodos[0].text);
+            })
+            .end(done);
+    });
+
+    it('should return a 404 for todo not found', (done) => {
+        request(app)
+            .get(`/todos/${new ObjectID().toHexString()}`)
+            .expect(404)
+            .end(done);
+    });
+
+    it('sound return 404 for invalid ObjectID', (done) => {
+        request(app)
+            .get(`/todos/12345`)
+            .expect(404)
             .end(done);
     });
 });
