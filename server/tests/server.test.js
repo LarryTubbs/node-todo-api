@@ -126,7 +126,18 @@ describe('DELETE /todos/:id', () => {
             .expect( (res) => {
                 expect(res.body.todo.text).to.be(seedTodos[0].text);
             })
-            .end(done);
+            .end((err, res) => {
+                if (err) {
+                    return done(err);
+                }
+
+                Todo.findById(seedTodos[0]._id.toHexString(), (todo) => {
+                    expect(todo).to.be(null);
+                    done();
+                }).catch((e) => {
+                    return done(err);
+                })
+            });
     });
 
     it('should return a 404 for todo not found', (done) => {
