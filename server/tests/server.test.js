@@ -11,7 +11,9 @@ const seedTodos = [{
     text: '1st test todo'
 },{
     _id: new ObjectID(),
-    text: '2nd test todo'
+    text: '2nd test todo',
+    completed: true,
+    completedAt: new Date().getTime()
 },{
     _id: new ObjectID(),
     text: '3rd test todo'
@@ -152,5 +154,44 @@ describe('DELETE /todos/:id', () => {
             .delete(`/todos/12345`)
             .expect(404)
             .end(done);
+    });
+});
+
+describe('PATCH /todos:id', () => {
+    it('should update the todo', (done) => {
+        var id = seedTodos[0]._id.toHexString();
+        var testText = 'Updated by test';
+        
+        request(app)
+            .patch(`/todos/${id}`)
+            .send({
+                text: testText,
+                completed: true
+            })
+            .expect(200)
+            .expect( (res) => {
+                expect(res.body.todo.text).to.be(testText);
+                expect(res.body.todo.completed).to.be(true);
+                expect(res.body.todo.completedAt).to.be.a('number');
+            })
+            .end(done);
+    });
+
+    it('should clear completedAt when todo is not completed', (done) => {
+        var id = seedTodos[1]._id.toHexString();
+        var testText = 'Updated by test';
+             
+        request(app)
+            .patch(`/todos/${id}`)
+            .send({
+                text: testText,
+                completed: false
+            })
+            .expect(200)
+            .expect( (res) => {
+                expect(res.body.todo.text).to.be(testText);
+                expect(res.body.todo.completed).to.be(false);
+                expect(res.body.todo.completedAt).to.be(null);
+            }).end(done);    
     });
 });
