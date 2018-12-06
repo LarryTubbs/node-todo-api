@@ -132,6 +132,14 @@ app.post('/users/login', (req, res) => {
     });
 });
 
+app.delete('/users/me/token', authenticate, (req, res) => {
+    req.user.removeToken(req.token).then(() => {
+        res.status(200).send();
+    }).catch((e) => {
+        res.status(400).send();
+    });
+});
+
 // start the server up on the proper port
 var port = process.env.PORT;
 app.listen(port, () => {
