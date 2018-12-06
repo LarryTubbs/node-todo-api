@@ -120,6 +120,7 @@ app.get('/users/me', authenticate, (req, res) => {
     res.send(req.user);
 });
 
+// start the server up on the proper port
 var port = process.env.PORT;
 app.listen(port, () => {
     console.log('Server listening on port ', port);
