@@ -255,3 +255,64 @@ describe('POST /users', () => {
     });
 
 });
+
+describe('POST /users/login', () => {
+    it('should login user and return auth token', (done) => {
+        request(app)
+        .post('/users/login')
+        .send({
+            email: users[1].email,
+            password: users[1].password
+        })
+        .expect(200)
+        .expect((res) => {
+            expect(res.headers['x-auth']).to.be.ok();
+        })
+        .end((err, res) => {
+            if (err) {
+                return done(err);
+            };
+
+            User.findById(users[1]._id).then((user) => {
+                expect(user.tokens[0]).property('access', 'auth');
+                expect(user.tokens[0]).property('token', res.headers['x-auth']);
+                return done();
+            }).catch((e) => {
+                return done(e);
+            });
+        });
+    });
+
+    it('should reject invalid login', (done) => {
+        request(app)
+        .post('/users/login')
+        .send({
+            email: users[1].email,
+            password: users[1].password + 'Invalid'
+        })
+        .expect(400)
+        .expect((res) => {
+            expect(res.headers['x-auth']).to.not.be.ok();
+        })
+        .end((err, res) => {
+            if (err) {
+                return done(err);
+            };
+
+            User.findById(users[1]._id).then((user) => {
+                expect(user.tokens.length).to.be(0);
+                return done();
+            }).catch((e) => {
+                return done(e);
+            });
+        });
+        // request(app)
+        // .post('/users/login')
+        // .send({
+        //     email: users[0].email,
+        //     password: 'userOnePassInvalid'
+        // })
+        // .expect(400)
+        // .end(done);
+    });
+});
