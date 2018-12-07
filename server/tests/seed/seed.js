@@ -18,30 +18,40 @@ const users = [{
 },{
     _id: userTwoID,
     email: 'lori.tubbs@tubbsfamily.org',
-    password: 'userTwoPass'
+    password: 'userTwoPass',
+    tokens: [{
+        access: 'auth',
+        token: jwt.sign({_id: userTwoID, access: 'auth'}, 'abc123').toString()
+    }]
 }];
 
 // create seed data
 const seedTodos = [{
     _id: new ObjectID(),
-    text: '1st test todo'
+    text: '1st test todo',
+    _creator: userOneID
 },{
     _id: new ObjectID(),
     text: '2nd test todo',
     completed: true,
-    completedAt: new Date().getTime()
+    completedAt: new Date().getTime(),
+    _creator: userTwoID
 },{
     _id: new ObjectID(),
-    text: '3rd test todo'
+    text: '3rd test todo',
+    _creator: userOneID
 },{
     _id: new ObjectID(),
-    text: '4th test todo'
+    text: '4th test todo',
+    _creator: userOneID
 },{
     _id: new ObjectID(),
-    text: '5th test todo'
+    text: '5th test todo',
+    _creator: userOneID
 },{
     _id: new ObjectID(),
-    text: '6th test todo'
+    text: '6th test todo',
+    _creator: userOneID
 }];
 
 const populateTodos = (done) => {
