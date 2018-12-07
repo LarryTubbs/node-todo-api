@@ -1,7 +1,7 @@
 # Todo API
-#### [From The Complete Node.js Developer Course (2nd Edition)](https://www.udemy.com/the-complete-nodejs-developer-course-2/learn/v4/content) course on Udemy
+## [From The Complete Node.js Developer Course (2nd Edition)](https://www.udemy.com/the-complete-nodejs-developer-course-2/) course on [Udemy](https://www.udemy.com/)
 
-## Setup the Environment
+### Setup the Environment
 
 This API assumes you have a file called ./server/config/config.json that sets local environment variables.  You must either declare these variables in your environment prior to running the app, or create this file, or both.  Here is an example of the file the code expects:
 
