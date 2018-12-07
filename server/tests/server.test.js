@@ -123,7 +123,7 @@ describe('DELETE /todos/:id', () => {
                     return done(err);
                 }
 
-                Todo.findById(seedTodos[1]._id.toHexString()).then((todo) => {
+                Todo.findById(seedTodos[1]._id).then((todo) => {
                     expect(todo).to.be(null);
                     done();
                 }).catch((e) => {
@@ -142,7 +142,7 @@ describe('DELETE /todos/:id', () => {
                     return done(err);
                 }
 
-                Todo.findById(seedTodos[1]._id.toHexString()).then((todo) => {
+                Todo.findById(seedTodos[1]._id).then((todo) => {
                     expect(todo).to.be.ok();
                     done();
                 }).catch((e) => {
